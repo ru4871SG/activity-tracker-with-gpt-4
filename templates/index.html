@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block main_content %}
+
+<section class="activity-list">
+    <h1>Activity Analysis</h1>
+
+    {% for activity in activities %}
+        <div class="activity">
+            <p class="activity__hour">
+                <strong>Hour:</strong> {{ activity["Hour"] }}
+            </p>
+            <p class="activity__content">
+                <strong>Activity:</strong> {{ activity["Activity"] }}
+            </p>
+            <p class="activity__gpt-response">
+                <strong>GPT-4 Response:</strong> {{ activity["gpt_message"] }}
+            </p>
+        </div>
+    {% else %}
+        <p>No activities found. To begin, upload a CSV file using the "Upload" link above.</p>
+        <p>This app analyze your CSV file, particularly your "activities" column using GPT-4</p>
+    {% endfor %}
+</section>
+
+{% endblock %}

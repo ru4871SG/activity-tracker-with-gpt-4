@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block main_content %}
+
+<section class="activity-list">
+    <h1>Upload a CSV File Here</h1>
+    <p>For now, this app can only take a CSV format. Make sure your first column is your hour, whereas your second column is your activity that you want to analyze. For example: 02:00 (first column), Running to work(second column). You can have as many rows as you want to be analyzed by GPT-4.</p>
+    <p>Note: If you upload a new CSV, different activities in the same hours will overwrite the old activities, and new entries (with new hours) will be added</p>
+
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file"><br><br>
+        <input type="submit" value="Upload">
+    </form>
+</section>
+
+{% endblock %}

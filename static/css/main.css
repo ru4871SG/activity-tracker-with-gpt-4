@@ -1,0 +1,174 @@
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+.header,
+.main {
+  max-width: 40rem;
+  margin: 0 auto;
+  /* this (margin: 0 auto) makes the content appear center-aligned */
+  padding: 1rem;
+}
+
+.header {
+  display: flex;
+  background: #000;
+  color: #fff;
+  justify_content: space-between;
+  align-items: center;
+  border-radius: 6px 6px 0px 0px;
+}
+
+.header__link {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.1s ease-in-out;
+  /* so it transition slowly (effect) */
+}
+
+.header__link:hover {
+  color: #f9dba0;
+}
+
+.header__logo {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.header__nav {
+  display: flex; /* This will lay out the .header__menu-link elements horizontally */
+  align-items: center; /* Centers the items vertically */
+  padding-left: 20px; /* Adds some spacing on the left, adjust as needed */
+}
+
+.header__menu-link {
+  margin-right: 20px; /* Adds spacing between menu items, adjust as needed */
+  text-decoration: none; /* Removes the underline from links */
+  color: white; /* Sets the text color to white */
+  transition: color 0.3s; /* Makes the color change smoothly over 0.3 seconds */
+}
+
+.header__menu-link:hover {
+  color: #f9dba0; /* Changes the text color on hover */
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.1rem;
+}
+
+.form__input {
+  padding: 1rem;
+  font-family: inherit;
+  font-size: inherit;
+  resize: none;
+  border: 3px solid #000;
+  border-radius: 6px;
+  background-color: #fafafa;
+  margin-bottom: 1rem;
+}
+
+.form__button {
+  font-size: inherit;
+  background-color: #f9dba0;
+  cursor: pointer;
+  /* cursor pointer is to get the hand icon when hovering our mouse */
+  border-radius: 6px;
+  border: none;
+  padding: 0.5rem 2.5rem;
+  align-self: flex-end;
+  /* this is to align the button to the right (the default is stretch) */
+}
+
+
+/* General Styles for the activity container */
+.activity {
+  display: block; /* changed from flex to block for a vertical layout */
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #fff2d8;
+  border: 2px solid #ccc; /* subtle border */
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* slight shadow for depth */
+}
+
+/* Styles for each part of the activity details */
+.activity__content,
+.activity__gpt-response,
+.activity__detected,
+.activity__date {
+  margin-bottom: 10px; /* space between paragraphs */
+}
+
+/* Style for user's text */
+.activity__content strong {
+  font-weight: bold;
+}
+
+/* Style for GPT-4 response */
+.activity__gpt-response strong {
+  font-weight: bold;
+}
+
+/* Style for detected activity */
+.activity__detected strong {
+  font-weight: bold;
+  color: #d35400; /* color emphasis for activity */
+}
+
+/* Style for date */
+.activity__date strong {
+  font-weight: bold;
+}
+
+/* Style for the form */
+.form {
+  margin-bottom: 30px; /* add space below the form */
+}
+
+/* Style for the input field within the form */
+.form__input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px; /* space between textarea and button */
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 16px;
+}
+
+/* Style for the button within the form */
+.form__button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 0; /* reset default margin */
+  background-color: #3498db; /* button color */
+  color: white; /* text color */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form__button:hover {
+  background-color: #2980b9; /* darker shade on hover */
+}
+
+/* Additional styles for hover effects and interactivity */
+.activity:hover {
+  background-color: #e9cd87; /* hover color for activity items */
+}
+
+/* If there are other elements with ".completed" class, ensure they don't get the same padding as .activity */
+.completed {
+  padding: 0;
+}
+
