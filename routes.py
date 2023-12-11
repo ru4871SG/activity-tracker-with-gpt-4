@@ -52,7 +52,6 @@ def upload_file():
 
 @pages.route("/", methods=["GET", "POST"])
 def index():
-    today = datetime.datetime.now().strftime("%Y-%m-%d")
 
     # Fetch all activities from the 'test_etl' collection in Mongodb
     activities_all = current_app.db.test_etl.find()
@@ -60,6 +59,5 @@ def index():
     return render_template(
         "index.html",
         activities=activities_all,
-        title="Activity Tracker - Home",
-        selected_date=today
+        title="Activity Tracker - Home"
     )
