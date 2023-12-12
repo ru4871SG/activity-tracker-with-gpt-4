@@ -1,36 +1,19 @@
-from flask import Blueprint, current_app, render_template, request, redirect, url_for, flash, jsonify
-import datetime
+from flask import Blueprint, current_app, render_template, request, redirect, url_for, flash
 from werkzeug.utils import secure_filename
 import os
+import json
 from .ActivityDetector.activity_analysis import activity_analyzer
 from .etl import etl_process
-
-# for charting, let's try matplotlib (later, I will use Bokeh or another interactive charting library)
-import matplotlib.pyplot as plt
-import base64
-from io import BytesIO
 
 pages = Blueprint("activities", __name__, template_folder="templates", static_folder="static")
 
 # Define allowed extensions for the user's uploaded file
 ALLOWED_EXTENSIONS = {'csv'}
 
-# define a function to check if the uploaded file has the correct extension
+# Define a function to check if the uploaded file has the correct extension
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-# Define a function to create a matplotlib chart from the activities data
-def create_chart(activities):
-    fig = plt.figure()
-    plt.plot([activity["Hour"] for activity in activities], [int(activity["gpt_message"]) for activity in activities])
-    plt.xlabel('Hour')
-    plt.ylabel('gpt_message')
-    buf = BytesIO()
-    fig.savefig(buf, format="png")
-    data = base64.b64encode(buf.getbuffer()).decode("ascii")
-    plt.close(fig)
-    return data
 
 
 @pages.route("/upload", methods=["GET", "POST"])
@@ -69,16 +52,15 @@ def upload_file():
 
 @pages.route("/", methods=["GET", "POST"])
 def index():
-
-    # Fetch all activities from the 'test_etl' collection in Mongodb and store them in a list
+    # Fetch all activities
     activities_all = list(current_app.db.test_etl.find())
 
-    # add matplotlib chart
-    chart_data = create_chart(activities_all)
+    # Convert activities data to JSON format for Highcharts interactive chart
+    activities_json = json.dumps(activities_all)
 
     return render_template(
         "index.html",
         activities=activities_all,
-        title="Activity Tracker - Home",
-        chart_data=chart_data
+        activities_chart=activities_json,
+        title="Activity Tracker - Home"
     )
