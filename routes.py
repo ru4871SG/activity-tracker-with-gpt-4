@@ -23,7 +23,9 @@ def allowed_file(filename):
 # Define a function to create a matplotlib chart from the activities data
 def create_chart(activities):
     fig = plt.figure()
-    plt.plot([activity["Hour"] for activity in activities])
+    plt.plot([activity["Hour"] for activity in activities], [int(activity["gpt_message"]) for activity in activities])
+    plt.xlabel('Hour')
+    plt.ylabel('gpt_message')
     buf = BytesIO()
     fig.savefig(buf, format="png")
     data = base64.b64encode(buf.getbuffer()).decode("ascii")
