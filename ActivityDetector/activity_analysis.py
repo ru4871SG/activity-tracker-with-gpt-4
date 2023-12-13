@@ -6,7 +6,8 @@ import os
 import json
 import requests
 
-ACTIVITY_KEYS = ['relaxed', 'calm', 'moderate', 'engaged', 'vigorous', 'intense', 'grueling', 'exhausting', 'extreme']
+# ACTIVITY_KEYS = ['relaxed', 'calm', 'moderate', 'engaged', 'vigorous', 'intense', 'grueling', 'exhausting', 'extreme']
+ACTIVITY_SCORES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 def get_api_key():
     return os.getenv('OPENAI_API_KEY')
@@ -22,8 +23,9 @@ def activity_analyzer(activities):
 
     for text_to_analyze in activities:
         # Constructing the prompt for activity analysis
-        prompt = f"Classify the intensity of the activity of the following text as either relaxed, calm, moderate, \
-            engaged, vigorous, intense, grueling, exhausting, or extreme: '{text_to_analyze}'."
+        prompt = f"Classify the intensity of the activity of the following text from 1 to 10. Make sure \
+            your response only include the number. For example just answer 1 or just answer 2, and so \
+            on: '{text_to_analyze}'."
 
         # Data to be sent to the API
         data = {
@@ -66,9 +68,9 @@ def activity_analyzer(activities):
 def process_gpt_message(message):
     print("Processing GPT Message:", message)
 
-    for activity in ACTIVITY_KEYS:
-        if activity in message.lower():
-            return activity.capitalize()
+    for activity in ACTIVITY_SCORES:
+        if str(activity) in message:
+            return activity
 
     print("Unexpected GPT Message:", message)
     return None

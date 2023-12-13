@@ -1,7 +1,7 @@
-from flask import Blueprint, current_app, render_template, request, redirect, url_for, flash, jsonify
-import datetime
+from flask import Blueprint, current_app, render_template, request, redirect, url_for, flash
 from werkzeug.utils import secure_filename
 import os
+import json
 from .ActivityDetector.activity_analysis import activity_analyzer
 from .etl import etl_process
 
@@ -10,7 +10,7 @@ pages = Blueprint("activities", __name__, template_folder="templates", static_fo
 # Define allowed extensions for the user's uploaded file
 ALLOWED_EXTENSIONS = {'csv'}
 
-# define a function to check if the uploaded file has the correct extension
+# Define a function to check if the uploaded file has the correct extension
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -47,17 +47,20 @@ def upload_file():
 
             return redirect(url_for('activities.index'))
 
-    return render_template('upload.html')
+    return render_template('index.html')
 
 
 @pages.route("/", methods=["GET", "POST"])
 def index():
+    # Fetch all activities
+    activities_all = list(current_app.db.test_etl.find())
 
-    # Fetch all activities from the 'test_etl' collection in Mongodb
-    activities_all = current_app.db.test_etl.find()
+    # Convert activities data to JSON format for Highcharts interactive chart
+    activities_json = json.dumps(activities_all)
 
     return render_template(
         "index.html",
         activities=activities_all,
+        activities_chart=activities_json,
         title="Activity Tracker - Home"
     )
