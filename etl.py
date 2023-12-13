@@ -26,7 +26,7 @@ def log_progress(message):
     time_stamp_format = '%Y-%h-%d-%H:%M:%S' # Year-Monthname-Day-Hour-Minute-Second
     now = datetime.now() # get current timestamp
     time_stamp = now.strftime(time_stamp_format)
-    with open("./code_log.txt","a") as f:
+    with open("uploads/code_log.txt","a") as f:
         f.write(time_stamp + ':' + message + '\n')
 
 log_progress('Preliminaries complete. Initiating ETL process')

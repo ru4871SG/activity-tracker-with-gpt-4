@@ -2,11 +2,13 @@
 
 Welcome to the GitHub repo for the Activity Tracker Flask app with GPT-4.
 
-This app allows you to upload CSV files containing your daily activity schedules. Once the file has been uploaded, GPT-4 will automatically analyze each row of your activity. For example, if the first row of the column "Activity" has the value "Running for 2km", GPT-4 will label it as "Moderate" or "Intense" activity.
+This app allows you to upload CSV files containing your daily activity schedules. Once the file has been uploaded, GPT-4 will automatically rate the intensity of each activity. For example, if the first row of the Activity column has the value "Running for 2km", GPT-4 may rate it as 6 or 7 (out of 10).
+
+Once you upload your CSV file, this app will automatically create an interactive line chart using Highcharts library, where the x-axis represents the hours, and the y-axis represents the activity ratings by GPT-4.
 
 ## Version
 
-Current version: 0.1
+Current version: 0.2
 
 ## How to Use
 
@@ -16,8 +18,8 @@ The collection name that this app fetches from MongoDB is called `test_etl`. If 
 
 To run this app in your localhost, just type `flask run` in your Terminal. Make sure you have installed all the necessary libraries (I will provide requirements.txt later).
 
-Once you are able to run the app locally, you can test it by using the uploaded csv sample files here, test.csv and test2.csv, to test how GPT-4 is able to detect and analyze the activities from the "Activity" column.
+Once you are able to run the app locally, you can test it by using the uploaded csv sample files here, test.csv and test2.csv, to test how GPT-4 is able to detect and rate the activities from the "Activity" column.
 
 ## Future Updates
 
-This app is still at its earliest stage. I have not refactored most of the codes. In the future versions, I will also include an automatic data visualization feature (I am thinking to use the Bokeh library for this) that takes the arguments from GPT-4 analysis of the uploaded activities. I also have some plans to include other file formats and automatic syncing to third-party apps.
+This app is still at its early stage. I have not refactored most of the codes. In the future versions, I will include other file formats and automatic syncing to third-party apps.
