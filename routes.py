@@ -47,7 +47,7 @@ def upload_file():
 
             return redirect(url_for('activities.index'))
 
-    return render_template('upload.html')
+    return render_template('index.html')
 
 
 @pages.route("/", methods=["GET", "POST"])

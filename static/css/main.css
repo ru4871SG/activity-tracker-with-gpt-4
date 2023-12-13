@@ -59,6 +59,14 @@ body {
   color: #f9dba0; /* Changes the text color on hover */
 }
 
+.csv {
+  font-size: 15px;
+}
+
+.infotext {
+  font-size: 12px;
+}
+
 .form {
   display: flex;
   flex-direction: column;

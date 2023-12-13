@@ -5,7 +5,19 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 
 <section class="activity-list">
-    <h1>Activity Analysis</h1>
+    <h1>Use GPT-4 to rate the intensities of your activities instantly</h1>
+
+    <section class="activity-list">
+        
+        <h4 class="csv">Upload a CSV File Here</h4>
+        <p class="infotext">For now, this app can only take a CSV format. Make sure your first column represent the hours, whereas your second column represent your activities. For example: first column shows "02:00", and second column shows "running to work". You can have as many rows as you want to be analyzed by GPT-4.</p>
+        <p class="infotext">Note: If you upload a new CSV, different activities in the same hours will overwrite the old activities, and new entries (with new hours) will be added</p>
+
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file"><br><br>
+            <input type="submit" value="Upload">
+        </form>
+    </section>
 
     {% if activities %}
         <div id="chart-container" style="height: 400px; width: 600px;"></div>
@@ -23,31 +35,28 @@
                 </p>
             </div>
         {% endfor %}
+
+        {# Highcharts script #}
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Process the activities data to the format suitable for Highcharts
+            var activities = JSON.parse('{{ activities_chart | safe }}');
+            var hours = activities.map(function(a) { return a.Hour; });
+            var gptMessages = activities.map(function(a) { return parseInt(a.gpt_message); });
+
+            // Render the chart
+            Highcharts.chart('chart-container', {
+                chart: { type: 'line' },
+                title: { text: 'Activity Analysis' },
+                xAxis: { categories: hours },
+                yAxis: { title: { text: 'GPT-4 Response' }},
+                series: [{ name: 'GPT-4 Response', data: gptMessages }]
+            });
+        });
+        </script>
     {% else %}
-        <p>No activities found. To begin, upload a CSV file using the "Upload" link above.</p>
-        <p>This app analyzes your CSV file, particularly your "activities" column using GPT-4</p>
+        <p>No activities found. Please initiate by selecting the 'Choose File' button to upload your CSV file. Once selected, ensure to finalize the upload by clicking the 'Upload' button.</p>
     {% endif %}
 </section>
-
-{% if activities %}
-    {# Highcharts script #}
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Process the activities data to the format suitable for Highcharts
-        var activities = JSON.parse('{{ activities_chart | safe }}');
-        var hours = activities.map(function(a) { return a.Hour; });
-        var gptMessages = activities.map(function(a) { return parseInt(a.gpt_message); });
-
-        // Render the chart
-        Highcharts.chart('chart-container', {
-            chart: { type: 'line' },
-            title: { text: 'Activity Analysis' },
-            xAxis: { categories: hours },
-            yAxis: { title: { text: 'GPT-4 Response' }},
-            series: [{ name: 'GPT-4 Response', data: gptMessages }]
-        });
-    });
-    </script>
-{% endif %}
 
 {% endblock %}
