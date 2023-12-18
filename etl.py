@@ -1,15 +1,16 @@
 ## Code for ETL operations
 
-import pandas as pd
-import re
-import json
-import os
+from .ActivityDetector.activity_analysis import activity_analyzer
+from datetime import datetime
 from dotenv import load_dotenv
 from pymongo import MongoClient
-from datetime import datetime
-import uuid
+
 import concurrent.futures
-from .ActivityDetector.activity_analysis import activity_analyzer
+import json
+import os
+import pandas as pd
+import re
+import uuid
 
 ## Load environment variables
 load_dotenv()

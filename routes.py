@@ -1,9 +1,11 @@
+## Routes for the application
+
+from .etl import etl_process
 from flask import Blueprint, current_app, render_template, request, redirect, url_for, flash
 from werkzeug.utils import secure_filename
-import os
+
 import json
-from .ActivityDetector.activity_analysis import activity_analyzer
-from .etl import etl_process
+import os
 
 pages = Blueprint("activities", __name__, template_folder="templates", static_folder="static")
 
